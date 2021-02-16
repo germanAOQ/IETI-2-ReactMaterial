@@ -1,16 +1,30 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {TodoList} from "./TodoList";
+import logo from './components/logo.svg';
+import './components/App.css';
+import {TodoList} from "./components/TodoList";
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import moment from "moment";
+import {Login} from "./components/Login"
+import {BrowserRouter as Router, Link, Route} from 'react-router-dom'
+import TodoApp from "./components/TodoApp"
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import FormControl from '@material-ui/core/FormControl';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import LockIcon from '@material-ui/icons/LockOutlined';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import AssignmentIcon from '@material-ui/icons/Assignment';
+import { green, pink } from '@material-ui/core/colors';
 
 class App extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {items: [], text: '', priority: 0, dueDate: moment()};
+        this.state = {items: [], text: '', priority: 0, dueDate: moment(), isLoggedIn:false};
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
@@ -19,9 +33,41 @@ class App extends Component {
 
 
     render() {
+		const LoginView = () => (
+				  <Login/>
+			);
+
+		const TodoAppView = () => (
+				  <TodoApp/>
+			);
 
         return (
+		
+			<Router>
+                <div className="App">
+                    <header className="App-header">
+                        <img src={logo} className="App-logo" alt="logo"/>
+                        <h1 className="App-title">TODO React App</h1>
+                    </header>
+
+                    <br/>
+                    <br/>
+
+                    <ul>
+                        <li><Link to="/">Login</Link></li>
+                        <li><Link to="/todo">Todo</Link></li>
+                    </ul>
+
+                    <div>
+                        <Route exact path="/" component={LoginView}/>
+                        <Route path="/todo" component={TodoAppView}/>
+                    </div>
+                </div>
+            </Router>
+			
+			/**
             <div className="App">
+				<Login />
                 <header className="App-header">
                     <img src={logo} className="App-logo" alt="logo"/>
                     <h1 className="App-title">TODO React App</h1>
@@ -71,6 +117,7 @@ class App extends Component {
                 <br/>
                 <TodoList todoList={this.state.items}/>
             </div>
+			*/
         );
     }
 
