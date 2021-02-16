@@ -34,7 +34,7 @@ class App extends Component {
 
     render() {
 		const LoginView = () => (
-				  <Login/>
+				  <Login isloggedin = {this.state.isLoggedIn}/>
 			);
 
 		const TodoAppView = () => (
